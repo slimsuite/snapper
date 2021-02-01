@@ -414,10 +414,11 @@ class Snapper(rje_obj.RJE_Object):
         localmin=X      : Minimum length of local alignment to output to local stats table [10]
         localidmin=PERC : Minimum local %identity of local alignment to output to local stats table [0.0]
         ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
+        ```
 
         '''
         try:### ~ [1] ~ Setup ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-            if self.getBool('DocHTML'): return self.docHTML()
+            if self.getBool('DocHTML'): return rje_rmd.docHTML(self)
             # Setup objects and process Genbank File
             if not self.setup(): raise ValueError('Sequence setup failed.')
             ### ~ [2] ~ Add main run code here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###

@@ -112,8 +112,9 @@ localsort=X     : Local hit field used to sort local alignments for localunique 
 localmin=X      : Minimum length of local alignment to output to local stats table [10]
 localidmin=PERC : Minimum local %identity of local alignment to output to local stats table [0.0]
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
+```
 
 
 
 <br>
-<small>&copy; 2020 Richard Edwards | richard.edwards@unsw.edu.au</small>
+<small>&copy; 2021 Richard Edwards | richard.edwards@unsw.edu.au</small>

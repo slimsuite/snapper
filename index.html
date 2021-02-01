@@ -1773,8 +1773,34 @@ div.tocify {
 <div id="commandline-options" class="section level2">
 <h2><span class="header-section-number">2.2</span> Commandline options</h2>
 <p>A list of commandline options can be generated at run-time using the <code>-h</code> or <code>help</code> flags. Please see the general <a href="http://slimsuite.blogspot.com/2013/08/command-line-options.html">SLiMSuite documentation</a> for details of how to use commandline options, including setting default values with <strong>INI files</strong>.</p>
-<p>``` ### ~ Input/Output options ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ### seqin=FASFILE : Input genome to identify variants in [] reference=FILE : Fasta (with accession numbers matching Locus IDs) or genbank file of reference genome. [] basefile=FILE : Root of output file names (same as SNP input file by default) [<SNPFILE> or <SEQIN>.vs.<REFERENCE>] nocopyfas=T/F : Whether to output CNV=0 fragments to <em>.nocopy.fas fasta file [True] nocopylen=X : Minimum length for CNV=0 fragments to be output [100] nocopymerge=X : CNV=0 fragments within X nt of each other will be merged prior to output [20] makesnp=T/F : Whether or not to generate Query vs Reference SNP tables [True] localsAM=T/F : Save local (and unique) hits data as SAM files in addition to TDT [False] filterself=T/F : Filter out self-hits prior to Snapper pipeline (e.g for assembly all-by-all) [False] mapper=X : Program to use for mapping files against each other (blast/minimap) [blast] dochtml=T/F : Generate HTML Snapper documentation (</em>.docs.html) instead of main run [False] ### ~ Reference Feature Options ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ### spcode=X : Overwrite species read from file (if any!) with X if generating sequence file from genbank [None] ftfile=FILE : Input feature file (locus,feature,position,start,end) [*.Feature.tdt] ftskip=LIST : List of feature types to exclude from analysis [source] ftbest=LIST : List of features to exclude if earlier feature in list overlaps position [(see above)] ### ~ SNP Mapping Options ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ### snpmap=FILE : Input table of SNPs for standalone mapping and output (should have locus and pos info) [None] snphead=LIST : List of SNP file headers [] snpdrop=LIST : List of SNP fields to drop [] altpos=T/F : Whether SNP file is a single mapping (with AltPos) (False=BCF) [True] altft=T/F : Use AltLocus and AltPos for feature mapping (if altpos=T) [False] localsort=X : Local hit field used to sort local alignments for localunique reduction [Identity] localmin=X : Minimum length of local alignment to output to local stats table [10] localidmin=PERC : Minimum local %identity of local alignment to output to local stats table [0.0] ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###</p>
-<p><br> <small>© 2020 Richard Edwards | <a href="mailto:richard.edwards@unsw.edu.au" class="email">richard.edwards@unsw.edu.au</a></small></p>
+<pre><code>### ~ Input/Output options ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
+seqin=FASFILE   : Input genome to identify variants in []
+reference=FILE  : Fasta (with accession numbers matching Locus IDs) or genbank file of reference genome. []
+basefile=FILE   : Root of output file names (same as SNP input file by default) [&lt;SNPFILE&gt; or &lt;SEQIN&gt;.vs.&lt;REFERENCE&gt;]
+nocopyfas=T/F   : Whether to output CNV=0 fragments to *.nocopy.fas fasta file [True]
+nocopylen=X     : Minimum length for CNV=0 fragments to be output [100]
+nocopymerge=X   : CNV=0 fragments within X nt of each other will be merged prior to output [20]
+makesnp=T/F     : Whether or not to generate Query vs Reference SNP tables [True]
+localsAM=T/F    : Save local (and unique) hits data as SAM files in addition to TDT [False]
+filterself=T/F  : Filter out self-hits prior to Snapper pipeline (e.g for assembly all-by-all) [False]
+mapper=X        : Program to use for mapping files against each other (blast/minimap) [blast]
+dochtml=T/F     : Generate HTML Snapper documentation (*.docs.html) instead of main run [False]
+### ~ Reference Feature Options ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
+spcode=X        : Overwrite species read from file (if any!) with X if generating sequence file from genbank [None]
+ftfile=FILE     : Input feature file (locus,feature,position,start,end) [*.Feature.tdt]
+ftskip=LIST     : List of feature types to exclude from analysis [source]
+ftbest=LIST     : List of features to exclude if earlier feature in list overlaps position [(see above)]
+### ~ SNP Mapping Options ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
+snpmap=FILE     : Input table of SNPs for standalone mapping and output (should have locus and pos info) [None]
+snphead=LIST    : List of SNP file headers []
+snpdrop=LIST    : List of SNP fields to drop []
+altpos=T/F      : Whether SNP file is a single mapping (with AltPos) (False=BCF) [True]
+altft=T/F       : Use AltLocus and AltPos for feature mapping (if altpos=T) [False]
+localsort=X     : Local hit field used to sort local alignments for localunique reduction [Identity]
+localmin=X      : Minimum length of local alignment to output to local stats table [10]
+localidmin=PERC : Minimum local %identity of local alignment to output to local stats table [0.0]
+### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###</code></pre>
+<p><br> <small>© 2021 Richard Edwards | <a href="mailto:richard.edwards@unsw.edu.au" class="email">richard.edwards@unsw.edu.au</a></small></p>
 </div>
 </div>
 
