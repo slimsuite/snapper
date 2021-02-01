@@ -1,0 +1,133 @@
+---
+title: "Snapper V1.8.0 Documentation"
+author: "Richard J. Edwards"
+date: "2021-01-31"
+output:
+  html_document:
+    css: http://www.slimsuite.unsw.edu.au/stylesheets/slimhtml.css
+    toc: true
+    toc_float: true
+    toc_collapsed: false
+    toc_depth: 3
+    number_sections: true
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+<a name="Top" />
+
+
+# Snapper: Genome-wide SNP Mapper and Genome Comparison Tool
+
+Snapper is designed to generate a table of SNPs from a BLAST comparison of two genomes, map those SNPs onto genome
+features, predict effects and generate a series of output tables to aid exploration of genomic differences.
+
+A basic overview of the Snapper workflow is as follows:
+
+1. Read/parse input sequences and reference features.
+
+2. All-by-all BLAST of query "Alt" genome against reference using GABLAM.
+
+3. Reduction of BLAST hits to Unique BLAST hits in which each region of a genome is mapped onto only a single region
+of the other genome. This is not bidirectional at this stage, so multiple unique regions of one genome may map onto
+the same region of the other.
+
+4. Determine Copy Number Variation (CNV) for each region of the genome based on the unique BLAST hits. This is
+determined at the nucleotide level as the number of times that nucleotide maps to unique regions in the other genome,
+thus establishing the copy number of that nucleotide in the other genome.
+
+5. Generate SNP Tables based on the unique local BLAST hits. Each mismatch or indel in a local BLAST alignment is
+recorded as a SNP.
+
+6. Mapping of SNPs onto reference features based on SNP reference locus and position.
+
+7. SNP Type Classification based on the type of SNP (insertion/deletion/substitution) and the feature in which it
+falls. CDS SNPs are further classified according to codon changes.
+
+8. SNP Effect Classification for CDS features predicting their effects (in isolation) on the protein product.
+
+9. SNP Summary Tables for the whole genome vs genome comparison. This includes a table of CDS Ratings based on the
+numbers and types of SNPs. For the `*.summary.tdt` output is, each SNP is only mapped to a single feature according
+to the FTBest hierarchy, removing SNPs mapping to one feature type from feature types lower in the list:
+
+- CDS,mRNA,tRNA,rRNA,ncRNA,misc_RNA,gene,mobile_element,LTR,rep_origin,telomere,centromere,misc_feature,intergenic
+
+Version 1.1.0 introduced additional fasta output of the genome regions with zero coverage in the other genome, i.e.
+the regions in the *.cnv.tdt file with CNV=0. Regions smaller than `nocopylen=X` [default=100] are deleted and then
+those within `nocopymerge=X` [default=20] of each other will be merged for output. This can be switched off with
+`nocopyfas=F`.
+
+Version 1.6.0 added filterself=T/F to filter out self-hits prior to Snapper pipeline. seqin=FILE sequences that are
+found in the Reference (matched by name) will be renamed with the prefix `alt` and output to `*.alt.fasta`. This is
+designed for identifying unique and best-matching homologous contigs from whole genome assemblies, where seqin=FILE
+and reference=FILE are the same. In this case, it is recommended to increase the `localmin=X` cutoff.
+
+Version 1.7.0 add the option to use minimap2 instead of BLAST+ for speed, using `mapper=minimap`.
+
+---
+
+# Running Snapper
+
+Snapper is written in Python 2.x and can be run directly from the commandline:
+
+    python $CODEPATH/snapper.py [OPTIONS]
+
+If running as part of [SLiMSuite](http://slimsuite.blogspot.com/), `$CODEPATH` will be the SLiMSuite `tools/`
+directory. If running from the standalone [Snapper git repo](https://github.com/slimsuite/snapper), `$CODEPATH`
+will be the path the to `code/` directory. Please see details in the [Snapper git repo](https://github.com/slimsuite/snapper)
+for running on example data.
+
+## Dependencies
+
+Either blast+ or [minimap2](https://github.com/lh3/minimap2) must be installed and either added to the
+environment `$PATH` or given to Snapper with the `blast+path` or `minimap2=PROG` settings.
+
+To generate documentation with `dochtml`, R will need to be installed and a pandoc environment variable must be set, e.g.
+
+    export RSTUDIO_PANDOC=/Applications/RStudio.app/Contents/MacOS/pandoc
+
+For Snapper documentation, run with `dochtml=T` and read the `*.docs.html` file generated.
+
+## Commandline options
+
+A list of commandline options can be generated at run-time using the `-h` or `help` flags. Please see the general
+[SLiMSuite documentation](http://slimsuite.blogspot.com/2013/08/command-line-options.html) for details of how to
+use commandline options, including setting default values with **INI files**.
+
+```
+### ~ Input/Output options ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
+seqin=FASFILE   : Input genome to identify variants in []
+reference=FILE  : Fasta (with accession numbers matching Locus IDs) or genbank file of reference genome. []
+basefile=FILE   : Root of output file names (same as SNP input file by default) [<SNPFILE> or <SEQIN>.vs.<REFERENCE>]
+nocopyfas=T/F   : Whether to output CNV=0 fragments to *.nocopy.fas fasta file [True]
+nocopylen=X     : Minimum length for CNV=0 fragments to be output [100]
+nocopymerge=X   : CNV=0 fragments within X nt of each other will be merged prior to output [20]
+makesnp=T/F     : Whether or not to generate Query vs Reference SNP tables [True]
+localsAM=T/F    : Save local (and unique) hits data as SAM files in addition to TDT [False]
+filterself=T/F  : Filter out self-hits prior to Snapper pipeline (e.g for assembly all-by-all) [False]
+mapper=X        : Program to use for mapping files against each other (blast/minimap) [blast]
+dochtml=T/F     : Generate HTML Snapper documentation (*.docs.html) instead of main run [False]
+### ~ Reference Feature Options ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
+spcode=X        : Overwrite species read from file (if any!) with X if generating sequence file from genbank [None]
+ftfile=FILE     : Input feature file (locus,feature,position,start,end) [*.Feature.tdt]
+ftskip=LIST     : List of feature types to exclude from analysis [source]
+ftbest=LIST     : List of features to exclude if earlier feature in list overlaps position [(see above)]
+### ~ SNP Mapping Options ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
+snpmap=FILE     : Input table of SNPs for standalone mapping and output (should have locus and pos info) [None]
+snphead=LIST    : List of SNP file headers []
+snpdrop=LIST    : List of SNP fields to drop []
+altpos=T/F      : Whether SNP file is a single mapping (with AltPos) (False=BCF) [True]
+altft=T/F       : Use AltLocus and AltPos for feature mapping (if altpos=T) [False]
+localsort=X     : Local hit field used to sort local alignments for localunique reduction [Identity]
+localmin=X      : Minimum length of local alignment to output to local stats table [10]
+localidmin=PERC : Minimum local %identity of local alignment to output to local stats table [0.0]
+### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
+
+
+
+<br>
+<small>&copy; 2020 Richard Edwards | richard.edwards@unsw.edu.au</small>

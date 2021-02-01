@@ -1,0 +1,6 @@
+Qry	Hit	Rank	Score	EVal	QryLen	HitLen	Qry_AlnLen	Qry_AlnID	Qry_AlnSim	Qry_Dirn	Qry_Start	Qry_End	Qry_OrderedAlnLen	Qry_OrderedAlnID	Qry_OrderedAlnSim	Qry_OrderedDirn	Qry_OrderedStart	Qry_OrderedEnd	Hit_AlnLen	Hit_AlnID	Hit_AlnSim	Hit_Dirn	Hit_Start	Hit_End	Hit_OrderedAlnLen	Hit_OrderedAlnID	Hit_OrderedAlnSim	Hit_OrderedDirn	Hit_OrderedStart	Hit_OrderedEnd
+unitig_0-quiver	ctg1	1	8538000	0.0	4681865	4641578	100.00	99.95	99.95	Fwd	1	4681865	99.12	99.07	99.07	Fwd	13523	4656079	100.00	99.96	99.96	Both	2	4641578	99.96	99.92	99.92	Bwd	2	4641578
+unitig_0-quiver	ctg3	2	7419	0.0	4681865	7903	0.15	0.14	0.14	Fwd	4419419	4426719	0.15	0.14	0.14	Fwd	4419419	4426719	96.52	83.87	83.87	Fwd	3	7817	96.52	83.87	83.87	Fwd	3	7817
+unitig_0-quiver	ctg5	3	4859	0.0	4681865	4847	0.26	0.24	0.24	Fwd	845244	4402243	0.10	0.09	0.09	Fwd	2868716	2873299	98.91	87.23	87.23	Both	40	4833	98.91	86.90	86.90	Fwd	40	4833
+unitig_0-quiver	ctg6	4	4682	0.0	4681865	4898	0.09	0.09	0.09	Fwd	2308538	2312962	0.09	0.09	0.09	Fwd	2308538	2312962	99.92	86.16	86.16	Bwd	5	4898	99.92	86.16	86.16	Bwd	5	4898
+unitig_0-quiver	ctg4	5	536	6e-149	4681865	6809	0.03	0.02	0.02	Fwd	3872656	3873971	0.03	0.02	0.02	Fwd	3872656	3873971	21.81	16.86	16.86	Fwd	487	1971	21.81	16.86	16.86	Fwd	487	1971
