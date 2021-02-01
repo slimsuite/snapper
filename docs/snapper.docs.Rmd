@@ -1,7 +1,7 @@
 ---
 title: "Snapper V1.8.0 Documentation"
 author: "Richard J. Edwards"
-date: "2021-01-31"
+date: "2021-02-01"
 output:
   html_document:
     css: http://www.slimsuite.unsw.edu.au/stylesheets/slimhtml.css
